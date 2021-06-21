@@ -1,10 +1,9 @@
 import React from 'react';
-import './App.css';
 import { useState } from 'react';
-import { MdSearch } from 'react-icons/md';
-import { MdDeleteForever } from 'react-icons/md';
+//import { MdSearch } from 'react-icons/md';
+//import { MdDeleteForever } from 'react-icons/md';
 
-function App() {
+const App = () => {
 
   const [noteTitle, setNoteTitle] = useState('');
   const [note, setNote] = useState('');
@@ -13,13 +12,14 @@ function App() {
   const [contentEdited, setContentEdited] = useState('');
   const [searchResults, setSearchResults] = useState([]);
 
-  function createNote(){
+  function createNote(e){
+    e.preventDefault();
     let newNote = {
-      title:{noteTitle},
-      text:{note},
-      id: new Date.getTime()
+      title:noteTitle,
+      text:note,
+      id: new Date().getTime()
     };
-    setNotes([...notes].cocncat(newNote));
+    setNotes([...notes].concat(newNote));
     // ponder the necessity of these two lines
     setNote('');
     setNoteTitle('');
@@ -39,7 +39,7 @@ function App() {
   }
 
   function deleteNote(id){
-    let editedNotes = [...notes].filter((note) => note.id !=== id);
+    let editedNotes = [...notes].filter((note) => (note.id !== id));
     setNotes(editedNotes);
   }
 
@@ -74,7 +74,7 @@ function App() {
                placeholder='note'
                onChange={(e) => setNote(e.target.value)}
                value={note}/>
-        <button onClick={createNote}>New Note</button>
+        <button>New Note</button>
       </form>
 
 {/*************************** Displayed Notes **************************/}
@@ -84,12 +84,12 @@ function App() {
 
           <div className='note'>
             <h1 className='noteTitle'>{note.title}</h1>
-            { note.id !==== underGoingEditing ?  ( <p>{note.text}</p> ) :
+            { note.id !== isBeingEdited ?  ( <p>{note.text}</p> ) :
             ( <div>
               <input type="text"
                   onChange={(e) => setNote(e.target.value)}
                   value={contentEdited}/>
-                  <button onClick={}>Submit</button>
+                  <button onClick={editNote(note.id)}>Submit</button>
               </div> )  }
 
               <button onClick={setIsBeingEdited(note.id)}>Edit</button>
@@ -107,13 +107,13 @@ function App() {
 
         <div className='note'>
           <h1 className='noteTitle'>{note.title}</h1>
-          { note.id !==== isBeingEditing ?  ( <p>{note.text}</p> ) :
+          { note.id !== isBeingEdited ?  ( <p>{note.text}</p> ) :
           ( <div>
             <input type="text"
                 onChange={(e) => setNote(e.target.value)}
                 value={contentEdited}/>
-                <button onClick={}>Submit</button>
-            </div> )  }
+                <button onClick={editNote(note.id)}>Submit</button>
+            </div> )  };
 
             <button onClick={setIsBeingEdited(note.id)}>Edit</button>
             <button onClick={deleteNote(note.id)}>Delete</button>
@@ -126,6 +126,6 @@ function App() {
     </div>
 {/**********************************************************************/}
   </div>
-}
+)};
 
 export default App;

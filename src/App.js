@@ -20,10 +20,16 @@ function App() {
   }
 
   function editNote(id){
-    let editMe = [...notes].filter((notes) => {
-      note.id === id;
+    let editMe = [...notes].map((notes) => {
+      if (note.id === id){
+          note.text = contentEdited;
+      };
+      // why wont this work without the return
+      return note;
     });
-    editMe.text =
+    setNotes(editMe);
+    setContentEdited('');
+    setIsBeingEdited(null);
   }
 
   function deleteNote(id){
@@ -33,7 +39,7 @@ function App() {
   function searchNotes(id){
 
   }
-  
+
   return (
     <div className="App">
 

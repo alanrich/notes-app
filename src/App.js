@@ -1,7 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import { MdSearch } from 'react-icons/md';
+import { MdDeleteForever } from 'react-icons/md';
 
 function App() {
 
@@ -19,7 +20,7 @@ function App() {
       id: new Date.getTime()
     };
     setNotes([...notes].cocncat(newNote));
-    // think about the necessity of these two lines
+    // ponder the necessity of these two lines
     setNote('');
     setNoteTitle('');
   }
@@ -29,7 +30,7 @@ function App() {
       if (note.id === id){
           note.text = contentEdited;
       };
-      // think about why this func requires the return
+      // ponder the necessity of the return
       return note;
     });
     setNotes(editedNotes);
@@ -63,7 +64,7 @@ function App() {
         <button>Search</button>
       </form>
 
-{/********************* Create a Note ********************/}
+{/********************* Creates a Note ********************/}
       <form action="" onSubmit={createNote}>
         <input type="text"
               placeholder='title'
@@ -100,8 +101,8 @@ function App() {
     </div>
 
 {/*********************** Search Results Modal *************************/}
-    <div className='searchResultsModal'>
-
+    <div className='search'>
+      <div className='search-icons' size='1.3em'>
       { searchResults.map((note) =>
 
         <div className='note'>
@@ -120,8 +121,10 @@ function App() {
 
       )}
 
+        <button onClick={closeSearchResults}>Close</button>
+      </div>
     </div>
-
+{/**********************************************************************/}
   </div>
 }
 

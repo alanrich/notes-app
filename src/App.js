@@ -5,7 +5,8 @@ import { useState } from 'react';
 
 function App() {
 
-  const [note, setNote] = useState();
+  const [noteTitle, setNoteTitle] = useState('');
+  const [note, setNote] = useState('');
   const [notes, setNotes] = useState([]);
   const [isBeingEdited, setIsBeingEdited] = useState(null);
   const [contentEdited, setContentEdited] = useState('');
@@ -13,10 +14,13 @@ function App() {
 
   function createNote(){
     let newNote = {
-      title:,
-      text:,
+      title:{noteTitle},
+      text:{note},
       id: new Date.getTime()
     };
+    setNotes([...notes].cocncat(newNote));
+    setNote('');
+    setNoteTitle('');
   }
 
   function editNote(id){
@@ -27,7 +31,7 @@ function App() {
       // why wont this work without the return
       return note;
     });
-    setNotes(editMe);
+    setNote(editMe);
     setContentEdited('');
     setIsBeingEdited(null);
   }
@@ -41,24 +45,45 @@ function App() {
   }
 
   return (
-    <div className="App">
+  <div className="App">
 
-    <div>
-      <header></header>
-      {/*the text of the note transforms to an input when edit button clicked*/}
-      { note.id !==== underGoingEditing ?  ( <p>{note.text}</p> ) :
-      ( <div>
-          <input type="text"
-                 onChange={}
-                 value={contentEdited}/>
-          <button onClick={}>Submit</button>
-        </div> )  }
 
-      <button onClick={setIsBeingEdited(note.id)}>Edit</button>
-      <button onClick={}>Delete</button>
+
+      <form action="" onSubmit={createNote}>
+        <input type="text"
+              placeholder='title'
+              onChange={(e) => setNoteTitle(e.target.value)}
+              value={noteTitle}/>
+        <input type="text"
+               placeholder='note'
+               onChange={(e) => setNote(e.target.value)}
+               value={note}/>
+        <button onClick={createNote}>New Note</button>
+      </form>
+
+
+    <div className='notesWrapper'>
+
+      { notes.map((note) =>
+
+          <div className='note'>
+            <header className='noteTitle'>{note.title}</header>
+            { note.id !==== underGoingEditing ?  ( <p>{note.text}</p> ) :
+            ( <div>
+              <input type="text"
+                  onChange={(e) => setNote(e.target.value)}
+                  value={contentEdited}/>
+                  <button onClick={}>Submit</button>
+              </div> )  }
+
+              <button onClick={setIsBeingEdited(note.id)}>Edit</button>
+              <button onClick={deleteNote(note.id)}>Delete</button>
+          </div>
+
+      )}
+
     </div>
-    </div>
-  );
+  </div>
 }
 
 export default App;

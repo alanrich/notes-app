@@ -1,4 +1,4 @@
-{ "homepage":https://alanrich-dev.github.io/notes-app/",
+{ "homepage":"https://alanrich-dev.github.io/notes-app/",
   "name": "notes",
   "version": "0.1.0",
   "private": true,
